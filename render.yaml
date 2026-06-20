@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: qr-security-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: VIRUSTOTAL_API_KEY
+        sync: false
+      - key: GOOGLE_SAFE_BROWSING_API_KEY
+        sync: false
+      - key: FRONTEND_URL
+        sync: false

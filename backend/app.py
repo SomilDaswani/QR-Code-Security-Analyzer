@@ -1,4 +1,5 @@
 import hashlib
+import os
 import time
 from datetime import datetime, timezone
 from urllib.parse import urlparse
@@ -16,7 +17,12 @@ from cache import get_cached, set_cached
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173"])
+
+_allowed_origins = ["http://localhost:5173"]
+_frontend_url = os.getenv("FRONTEND_URL")
+if _frontend_url:
+    _allowed_origins.append(_frontend_url.rstrip("/"))
+CORS(app, origins=_allowed_origins)
 
 
 def _is_valid_url(url: str) -> bool:
