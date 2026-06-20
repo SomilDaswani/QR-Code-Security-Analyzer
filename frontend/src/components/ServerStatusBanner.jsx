@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const POLL_INTERVAL_MS = 3000;
+const BASE = import.meta.env.VITE_API_BASE_URL ?? "";
 
 export default function ServerStatusBanner() {
   const [online, setOnline] = useState(null); // null = unknown, true = up, false = down
@@ -11,7 +12,7 @@ export default function ServerStatusBanner() {
     async function ping() {
       try {
         console.log("[ServerStatus] Pinging /api/health...");
-        const res = await fetch("/api/health", { cache: "no-store" });
+        const res = await fetch(`${BASE}/api/health`, { cache: "no-store" });
         if (res.ok) {
           console.log("[ServerStatus] Server is online.");
           setOnline(true);
